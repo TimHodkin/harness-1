@@ -31,3 +31,38 @@ pipeline:
                     isAutoRejectEnabled: false
                     approverInputs: []
         tags: {}
+    - stage:
+        name: stage1
+        identifier: stage1
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: TerraformApply
+                  name: TerraformApply_1
+                  identifier: TerraformApply_1
+                  spec:
+                    provisionerIdentifier: a1
+                    configuration:
+                      type: Inline
+                      spec:
+                        configFiles:
+                          store:
+                            spec:
+                              connectorRef: account.accgh
+                              repoName: harness-1
+                              gitFetchType: Branch
+                              branch: main
+                              folderPath: /tf
+                            type: Github
+                  timeout: 10m
+        tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.accgh
+        repoName: harness-1
+        build: <+input>
+        sparseCheckout: []
